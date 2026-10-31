@@ -1,0 +1,15 @@
+# downloaded tools (tools/setup.sh)
+tools/bin/
+# KiCad / pipeline scratch
+*.kicad_prl
+*-backups/
+fp-info-cache
+*.dsn
+*.ses
+*.preroute.kicad_pcb
+*.drc.tmp
+boards/*/*.rpt
+boards/*/*.net
+boards/*/sch_svg/
+__pycache__/
+.DS_Store

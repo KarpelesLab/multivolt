@@ -1,0 +1,3 @@
+#!/bin/bash
+/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli "$@" 2>&1 | grep -v -E "^Fontconfig"
+exit ${PIPESTATUS[0]}
