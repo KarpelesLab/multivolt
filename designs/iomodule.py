@@ -100,7 +100,7 @@ def build():
               dict(text="D=GND: B→A", x=0, y=-2.45, size=0.8, thick=0.15),
               dict(text="LVL4  1.1-5.5V", x=0, y=ypin(10) + 1.55, size=0.8, thick=0.15)]
     # back side: full legend, rotated along the free strip between the header bodies
-    back = ["MultiVolt LVL4 level translator",
+    back = ["github.com/KarpelesLab/multivolt",
             "VA, VB: 1.1-5.5V each, 420Mbps",
             "DIRn open (or VA): An \u2192 Bn",
             "DIRn to GND: Bn \u2192 An",

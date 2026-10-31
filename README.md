@@ -119,3 +119,14 @@ These boards haven't been built yet. On the first prototypes:
 2. Run a load step on the 1.2 V and 5 V taps to check for ringing. This is the TPS62933 loop with 4.7 µH and 3×22 µF across the whole 1.2–5 V range.
 3. Confirm the OC trip point and RESET behaviour.
 4. Check how hot the converters get at 2 A.
+
+## License
+Copyright 2026 Mark Karpeles.
+
+This hardware design, including the generator scripts that produce it, is licensed under the **CERN Open Hardware Licence Version 2 – Strongly Reciprocal** (CERN-OHL-S v2). See [`LICENSE`](LICENSE).
+
+You may build, modify, sell and distribute boards made from this design. If you distribute boards or modified designs, you must keep the copyright and licence notices and make your complete modified source available under the same licence.
+
+Source location: <https://github.com/KarpelesLab/multivolt>
+
+This source is distributed WITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING OF MERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A PARTICULAR PURPOSE. Please see the CERN-OHL-S v2 for applicable conditions.

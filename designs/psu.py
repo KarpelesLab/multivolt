@@ -118,6 +118,8 @@ def build():
         dict(text="+  G  G  +", x=0, y=48.1, size=0.8),
         dict(text="MultiVolt PSU r1.0 - 1.2..5V rails, 1A/2A latching OCP", x=0, y=30, size=1.0, layer="B.SilkS"),
         dict(text="Rail pins: GND, + on both sides (left to right)", x=0, y=33, size=0.9, layer="B.SilkS"),
+        dict(text="github.com/KarpelesLab/multivolt", x=0, y=35.5, size=0.9, layer="B.SilkS"),
+        dict(text="(c) 2026 Mark Karpeles - CERN-OHL-S v2", x=0, y=40.5, size=0.9, layer="B.SilkS"),
     ]
     # --- hand-routed VBUS distribution
     tracks += [
