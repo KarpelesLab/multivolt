@@ -44,14 +44,16 @@ boards/<name>/ generated KiCad 10 project (.kicad_sch/.kicad_pcb/.kicad_pro)
   * **PD** (yellow): the PD contract was negotiated.
   * **OK** (yellow-green, one per rail): the converter reports power-good.
   * **OC** (red, one per rail): overcurrent latched.
-* **Outputs:** the rail pins plug into the breadboard: **outer rail = selected voltage, inner rail = GND**. There's also a 4-pin **AUX** header (L+, G, G, R+) for wiring off-board.
+* **Outputs:** the rail pins plug into both breadboard power-rail pairs (GND, + on each side). There's also a 4-pin **AUX** header (L+, G, G, R+) for wiring off-board.
 * A 1 kΩ bleeder on each rail drops the old voltage in about 35 ms after you switch to a lower setting. The buck can't pull its output down by itself.
 
-### ⚠️ Breadboard rail spacing — check yours
-Breadboards don't agree on the distance between the left and right power rails. The board has **three footprint positions per side**, for **1.5″, 1.6″ or 1.7″** between the two *inner* rail rows.
-* The BOM populates **1.6″** by default (J13 / J33). The other positions are marked DNP.
-* Measure your breadboard. If it's different, change `RAIL_DEFAULT` in `designs/psu.py` and regenerate, or swap the DNP flags in the BOM.
-* The rail headers go on the **bottom** side, pins pointing down.
+### Breadboard rail pins
+Sized for MB102-style 830-point breadboards, 55–56 mm wide, with everything on the 0.1″ grid.
+
+* **Positions:** the inner rail holes are 0.85″ (21.59 mm) from the centreline and the outer ones 0.95″ (24.13 mm).
+* **Pins:** each side has **two 2-pin headers, 5 holes (12.7 mm) apart** along the rail, so the board sits firmly.
+* **Polarity:** the order is **GND, +** on both sides, reading left to right with the USB connector facing away from the breadboard. To flip it to + then GND, set `RAIL_ORDER = "+G"` in `designs/psu.py` and regenerate.
+* **Mounting:** the headers go on the **bottom** side, pins pointing down.
 
 ### Usage notes
 * Choose the voltage **before** connecting sensitive parts. Changing the jumper on a live, loaded rail can trip OC: press RESET.

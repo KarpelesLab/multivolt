@@ -533,15 +533,15 @@
     "2": "GND"
    },
    "pcb": {
-    "x": -17.0,
-    "y": 46.9,
-    "rot": 0
+    "x": -21.59,
+    "y": 47.6,
+    "rot": 270
    },
    "dnp": false,
    "in_bom": true,
    "sym_uuid": "bfe8b7aa-9ce8-5b38-9b6b-362542e2c9b5",
    "lib_id": "Device:C",
-   "desc": "output cap near the rail pins"
+   "desc": "output cap at the rail pins"
   },
   {
    "ref": "R19",
@@ -686,9 +686,9 @@
     "2": "GND"
    },
    "pcb": {
-    "x": -17.0,
-    "y": 48.6,
-    "rot": 0
+    "x": -21.59,
+    "y": 50.6,
+    "rot": 270
    },
    "dnp": false,
    "in_bom": true,
@@ -1011,7 +1011,7 @@
    },
    "pcb": {
     "x": -25.6,
-    "y": 41.0,
+    "y": 39.9,
     "rot": 0
    },
    "dnp": false,
@@ -1032,7 +1032,7 @@
    },
    "pcb": {
     "x": -25.6,
-    "y": 42.5,
+    "y": 41.3,
     "rot": 0
    },
    "dnp": false,
@@ -1053,7 +1053,7 @@
    },
    "pcb": {
     "x": -21.2,
-    "y": 41.0,
+    "y": 39.9,
     "rot": 0
    },
    "dnp": false,
@@ -1074,7 +1074,7 @@
    },
    "pcb": {
     "x": -21.2,
-    "y": 42.5,
+    "y": 41.3,
     "rot": 0
    },
    "dnp": false,
@@ -1085,21 +1085,21 @@
   },
   {
    "ref": "J12",
-   "value": "RAIL L 1.5in",
+   "value": "RAIL L",
    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
    "lcsc": "C492401",
    "mpn": null,
    "nets": {
-    "1": "OUT_L",
-    "2": "GND"
+    "1": "GND",
+    "2": "OUT_L"
    },
    "pcb": {
-    "x": -21.59,
-    "y": 45.0,
+    "x": -24.13,
+    "y": 42.8,
     "rot": 270,
     "side": "B"
    },
-   "dnp": true,
+   "dnp": false,
    "in_bom": true,
    "sym_uuid": "4d290f28-c0ed-5265-8aef-c4a1c4b2a7e4",
    "lib_id": "Connector_Generic:Conn_01x02",
@@ -1107,45 +1107,23 @@
   },
   {
    "ref": "J13",
-   "value": "RAIL L 1.6in",
+   "value": "RAIL L",
    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
    "lcsc": "C492401",
    "mpn": null,
    "nets": {
-    "1": "OUT_L",
-    "2": "GND"
+    "1": "GND",
+    "2": "OUT_L"
    },
    "pcb": {
-    "x": -22.86,
-    "y": 48.8,
+    "x": -24.13,
+    "y": 55.5,
     "rot": 270,
     "side": "B"
    },
    "dnp": false,
    "in_bom": true,
    "sym_uuid": "76f6d9fa-a802-5192-9f01-f0b304277627",
-   "lib_id": "Connector_Generic:Conn_01x02",
-   "desc": "breadboard rail pins (mount on bottom, pins down)"
-  },
-  {
-   "ref": "J14",
-   "value": "RAIL L 1.7in",
-   "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-   "lcsc": "C492401",
-   "mpn": null,
-   "nets": {
-    "1": "OUT_L",
-    "2": "GND"
-   },
-   "pcb": {
-    "x": -24.13,
-    "y": 52.6,
-    "rot": 270,
-    "side": "B"
-   },
-   "dnp": true,
-   "in_bom": true,
-   "sym_uuid": "80a85525-3ed6-5bea-a048-e4112c67df42",
    "lib_id": "Connector_Generic:Conn_01x02",
    "desc": "breadboard rail pins (mount on bottom, pins down)"
   },
@@ -1355,15 +1333,15 @@
     "2": "GND"
    },
    "pcb": {
-    "x": 17.0,
-    "y": 46.9,
-    "rot": 0
+    "x": 24.13,
+    "y": 47.6,
+    "rot": 270
    },
    "dnp": false,
    "in_bom": true,
    "sym_uuid": "9cad1dae-1208-5e42-b939-f8b5b7f47a77",
    "lib_id": "Device:C",
-   "desc": "output cap near the rail pins"
+   "desc": "output cap at the rail pins"
   },
   {
    "ref": "R39",
@@ -1508,9 +1486,9 @@
     "2": "GND"
    },
    "pcb": {
-    "x": 17.0,
-    "y": 48.6,
-    "rot": 0
+    "x": 24.13,
+    "y": 50.6,
+    "rot": 270
    },
    "dnp": false,
    "in_bom": true,
@@ -1833,7 +1811,7 @@
    },
    "pcb": {
     "x": 8.4,
-    "y": 41.0,
+    "y": 39.9,
     "rot": 0
    },
    "dnp": false,
@@ -1854,7 +1832,7 @@
    },
    "pcb": {
     "x": 8.4,
-    "y": 42.5,
+    "y": 41.3,
     "rot": 0
    },
    "dnp": false,
@@ -1875,7 +1853,7 @@
    },
    "pcb": {
     "x": 12.8,
-    "y": 41.0,
+    "y": 39.9,
     "rot": 0
    },
    "dnp": false,
@@ -1896,7 +1874,7 @@
    },
    "pcb": {
     "x": 12.8,
-    "y": 42.5,
+    "y": 41.3,
     "rot": 0
    },
    "dnp": false,
@@ -1907,51 +1885,7 @@
   },
   {
    "ref": "J32",
-   "value": "RAIL R 1.5in",
-   "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-   "lcsc": "C492401",
-   "mpn": null,
-   "nets": {
-    "1": "GND",
-    "2": "OUT_R"
-   },
-   "pcb": {
-    "x": 19.05,
-    "y": 45.0,
-    "rot": 270,
-    "side": "B"
-   },
-   "dnp": true,
-   "in_bom": true,
-   "sym_uuid": "cb81bb6a-331b-5584-a5c7-a7e61d95fcb1",
-   "lib_id": "Connector_Generic:Conn_01x02",
-   "desc": "breadboard rail pins (mount on bottom, pins down)"
-  },
-  {
-   "ref": "J33",
-   "value": "RAIL R 1.6in",
-   "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-   "lcsc": "C492401",
-   "mpn": null,
-   "nets": {
-    "1": "GND",
-    "2": "OUT_R"
-   },
-   "pcb": {
-    "x": 20.32,
-    "y": 48.8,
-    "rot": 270,
-    "side": "B"
-   },
-   "dnp": false,
-   "in_bom": true,
-   "sym_uuid": "d794c57b-9b01-581b-8806-cc91b28c2a1a",
-   "lib_id": "Connector_Generic:Conn_01x02",
-   "desc": "breadboard rail pins (mount on bottom, pins down)"
-  },
-  {
-   "ref": "J34",
-   "value": "RAIL R 1.7in",
+   "value": "RAIL R",
    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
    "lcsc": "C492401",
    "mpn": null,
@@ -1961,13 +1895,35 @@
    },
    "pcb": {
     "x": 21.59,
-    "y": 52.6,
+    "y": 42.8,
     "rot": 270,
     "side": "B"
    },
-   "dnp": true,
+   "dnp": false,
    "in_bom": true,
-   "sym_uuid": "41c00a32-0353-5a0d-a958-abfb6321398b",
+   "sym_uuid": "cb81bb6a-331b-5584-a5c7-a7e61d95fcb1",
+   "lib_id": "Connector_Generic:Conn_01x02",
+   "desc": "breadboard rail pins (mount on bottom, pins down)"
+  },
+  {
+   "ref": "J33",
+   "value": "RAIL R",
+   "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+   "lcsc": "C492401",
+   "mpn": null,
+   "nets": {
+    "1": "GND",
+    "2": "OUT_R"
+   },
+   "pcb": {
+    "x": 21.59,
+    "y": 55.5,
+    "rot": 270,
+    "side": "B"
+   },
+   "dnp": false,
+   "in_bom": true,
+   "sym_uuid": "d794c57b-9b01-581b-8806-cc91b28c2a1a",
    "lib_id": "Connector_Generic:Conn_01x02",
    "desc": "breadboard rail pins (mount on bottom, pins down)"
   },

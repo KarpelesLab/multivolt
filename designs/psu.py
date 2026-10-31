@@ -36,16 +36,19 @@ TAPS = ["1.2V", "1.5V", "1.8V", "2.5V", "3.3V", "5.0V"]
 BOARD_W = 60.0
 BOARD_H = 57.0
 SEC_X = 17.0             # section centres at -/+ SEC_X
-RAIL_ROWS = {"1.5in": 45.0, "1.6in": 48.8, "1.7in": 52.6}       # y of each rail-pin option
-RAIL_D = {"1.5in": 38.1, "1.6in": 40.64, "1.7in": 43.18}         # inner-to-inner rail distance
-RAIL_DEFAULT = "1.6in"
+# Breadboard power rails (MB102-style 830, 55-56 mm wide, everything on the 0.1" grid):
+# inner rail hole 0.85" from the centreline, outer rail 0.95".
+RAIL_INNER = 21.59
+RAIL_OUTER = 24.13
+RAIL_ROW_Y = (42.8, 55.5)       # two 2-pin headers per side, 5 holes (12.7 mm) apart along the rail
+RAIL_ORDER = "G+"               # left-to-right on BOTH sides: "G+" = GND then +, "+G" = + then GND
 
 
 def build():
     d = Design("mvpsu", "MultiVolt PSU - USB-C PD breadboard supply", rev="1.0",
                comments=["USB-C PD (CH224A, 9 V request) -> 2x TPS62933P, jumper-selected 1.2/1.5/1.8/2.5/3.3/5.0 V",
                          "INA301 latching overcurrent per rail (1 A, or 2 A with ILIM jumper removed)",
-                         "Rail pins: populate ONE pair of rail headers matching your breadboard (default 1.6\")"])
+                         "Rail pins: 2x2 pins per side, 5 holes apart; GND, + on both sides"])
     texts, tracks, vias, zones = [], [], [], []
 
     # ================================================================ input
@@ -101,9 +104,8 @@ def build():
     d.add("J2", "Connector_Generic:Conn_01x04", "AUX OUT", HDR + "PinHeader_1x04_P2.54mm_Vertical",
           pins={"1": "OUT_L", "2": "GND", "3": "GND", "4": "OUT_R"}, lcsc="C2691448", group="Outputs",
           desc="rail outputs for wiring off-board (pins up)", pcb=dict(x=-3.81, y=46.0, rot=90))
-    d.note("Outputs", "Rail headers: three footprint options per side for breadboards whose left/right power\n"
-                      "rails are 1.5\", 1.6\" or 1.7\" apart (inner rail to inner rail). Populate one pair.\n"
-                      "Outer rail = + (selected voltage), inner rail = GND.")
+    d.note("Outputs", "Rail pins: two 2-pin headers per side, 5 holes apart along the rail, for MB102-style\n"
+                      "breadboards (inner rail 0.85\" / outer rail 0.95\" from centre). Order GND, + on both sides.")
 
     # ----------------------------------------------------------- board graphics
     texts += [
@@ -115,8 +117,7 @@ def build():
         dict(text="L    AUX    R", x=0, y=44.0, size=0.8),
         dict(text="+  G  G  +", x=0, y=48.1, size=0.8),
         dict(text="MultiVolt PSU r1.0 - 1.2..5V rails, 1A/2A latching OCP", x=0, y=30, size=1.0, layer="B.SilkS"),
-        dict(text="Rail pin options: inner-to-inner 1.5\" / 1.6\" / 1.7\"", x=0, y=33, size=0.9, layer="B.SilkS"),
-        dict(text="Outer rail = +, inner rail = GND", x=0, y=35, size=0.9, layer="B.SilkS"),
+        dict(text="Rail pins: GND, + on both sides (left to right)", x=0, y=33, size=0.9, layer="B.SilkS"),
     ]
     # --- hand-routed VBUS distribution
     tracks += [
@@ -162,6 +163,11 @@ def section(d, s, sx, base, texts, tracks, vias):
     R = lambda k: "R%d" % (base + k)              # noqa: E731
     U_BUCK, U_INA, IND = "U%d" % (3 if s == "L" else 4), "U%d" % (5 if s == "L" else 6), "L%d" % (1 if s == "L" else 2)
 
+    sign = -1 if s == "L" else 1
+    pin_x = sorted([sign * RAIL_INNER, sign * RAIL_OUTER])          # [lower x, higher x]
+    VX = pin_x[1] if RAIL_ORDER == "G+" else pin_x[0]               # x of the + pins
+    GX = pin_x[0] if RAIL_ORDER == "G+" else pin_x[1]
+
     def P(x, y, rot=0, **k):
         dd = dict(x=sx + x, y=y, rot=rot)
         dd.update(k)
@@ -188,7 +194,7 @@ def section(d, s, sx, base, texts, tracks, vias):
     d.add(R(0), "Device:R", "50m", "Resistor_SMD:R_1206_3216Metric", pins={"1": n("VPRE"), "2": n("OUT")},
           lcsc="C127691", group=g, desc="current shunt 50 mOhm 1%", pcb=P(8.4, 15.5, 0))
     d.add(C(6), "Device:C", "10uF", C0603, pins={"1": n("OUT"), "2": "GND"}, lcsc="C19702", group=g,
-          desc="output cap near the rail pins", pcb=P(0.0, 46.9, 0))
+          desc="output cap at the rail pins", pcb=P(VX - sx, 47.6, 270))
     # --- enable / power good
     d.add(R(9), "Device:R", "100k", R0402, pins={"1": "+3V3", "2": n("EN")}, lcsc="C25741", group=g,
           pcb=P(-7.0, 2.6, 270))
@@ -209,7 +215,7 @@ def section(d, s, sx, base, texts, tracks, vias):
           desc="differential filter cap", pcb=P(8.95, 19.6, 0))
     # bleeder: rail drops to the new (lower) voltage in ~35 ms (buck can't sink current)
     d.add(R(17), "Device:R", "1k", R0402, pins={"1": n("OUT"), "2": "GND"}, lcsc="C11702", group=g,
-          desc="output bleeder, 25 mW at 5 V", pcb=P(0.0, 48.6, 0))
+          desc="output bleeder, 25 mW at 5 V", pcb=P(VX - sx, 50.6, 270))
     d.add(C(7), "Device:C", "100nF", C0402, pins={"1": "+3V3", "2": "GND"}, lcsc="C1525", group=g,
           pcb=P(2.6, 21.8, 270))
     d.add(R(11), "Device:R", "24.9k", R0402, pins={"1": n("LIM"), "2": "GND"}, lcsc="C138027", group=g,
@@ -240,33 +246,28 @@ def section(d, s, sx, base, texts, tracks, vias):
     texts.append(dict(text="VSEL " + s, x=sx - 6.3, y=22.4, size=0.9, thick=0.16))
     # --- LEDs
     d.add("D%d" % base, "Device:LED", "OK", LED0603, pins={"K": n("OKK"), "A": n("OKA")}, lcsc="C2289",
-          mpn="KT-0603YG", group=g, pcb=P(-8.6, 41.0))
+          mpn="KT-0603YG", group=g, pcb=P(-8.6, 39.9))
     d.add(R(13), "Device:R", "330", R0402, pins={"1": "+3V3", "2": n("OKA")}, lcsc="C25104", group=g,
-          pcb=P(-8.6, 42.5))
+          pcb=P(-8.6, 41.3))
     d.add("D%d" % (base + 1), "Device:LED", "OC", LED0603, pins={"K": n("EN"), "A": n("OCA")}, lcsc="C2286",
-          mpn="KT-0603R", group=g, desc="lit = overcurrent latched", pcb=P(-4.2, 41.0))
+          mpn="KT-0603R", group=g, desc="lit = overcurrent latched", pcb=P(-4.2, 39.9))
     d.add(R(14), "Device:R", "1k", R0402, pins={"1": "+3V3", "2": n("OCA")}, lcsc="C11702", group=g,
-          pcb=P(-4.2, 42.5))
-    texts.append(dict(text="OK", x=sx - 8.6, y=39.8, size=0.8))
-    texts.append(dict(text="OC", x=sx - 4.2, y=39.8, size=0.8))
+          pcb=P(-4.2, 41.3))
+    texts.append(dict(text="OK", x=sx - 8.6, y=38.85, size=0.7))
+    texts.append(dict(text="OC", x=sx - 4.2, y=38.85, size=0.7))
     texts.append(dict(text="1A", x=sx + 9.4, y=25.4, size=0.8))
     texts.append(dict(text="I", x=sx + 5.8, y=30.2, size=0.7))
     texts.append(dict(text="RAIL " + s, x=sx, y=1.6, size=1.1, thick=0.2))
-    # --- rail headers (one per breadboard spacing option)
-    sign = -1 if s == "L" else 1
-    for j, (opt, y) in enumerate(sorted(RAIL_ROWS.items(), key=lambda kv: kv[1])):
-        inner = sign * RAIL_D[opt] / 2
-        outer = sign * (RAIL_D[opt] / 2 + 2.54)
+    # --- rail headers: two 2-pin headers per side, 5 holes apart along the rail (bottom side, pins down)
+    for j, y in enumerate(RAIL_ROW_Y):
         ref = "J%d" % (base + 2 + j)
-        # header rotated 90: pad 1 at origin, pad 2 at +x
-        x0 = min(inner, outer)
-        pins = {"1": n("OUT") if s == "L" else "GND", "2": "GND" if s == "L" else n("OUT")}
-        d.add(ref, "Connector_Generic:Conn_01x02", "RAIL %s %s" % (s, opt), HDR + "PinHeader_1x02_P2.54mm_Vertical",
-              pins=pins, lcsc="C492401", group="Outputs", dnp=(opt != RAIL_DEFAULT),
-              desc="breadboard rail pins (mount on bottom, pins down)", pcb=dict(x=x0, y=y, rot=270, side="B"))
-        texts.append(dict(text=opt.replace("in", "\""), x=sign * 14.6, y=y, size=0.8))
-        texts.append(dict(text="+" if True else "", x=outer, y=y - 1.75, size=0.8))
-        texts.append(dict(text="G", x=inner, y=y - 1.75, size=0.7))
+        # rotated 270 on the bottom side: pad 1 at the lower x, pad 2 at +2.54 mm
+        pins = {"1": "GND" if RAIL_ORDER == "G+" else n("OUT"), "2": n("OUT") if RAIL_ORDER == "G+" else "GND"}
+        d.add(ref, "Connector_Generic:Conn_01x02", "RAIL %s" % s, HDR + "PinHeader_1x02_P2.54mm_Vertical",
+              pins=pins, lcsc="C492401", group="Outputs",
+              desc="breadboard rail pins (mount on bottom, pins down)", pcb=dict(x=pin_x[0], y=y, rot=270, side="B"))
+    texts.append(dict(text="+", x=VX, y=44.4, size=0.9))
+    texts.append(dict(text="G", x=GX, y=44.4, size=0.8))
 
     # --- pre-routed power paths (pad references resolved by pcbgen)
     U = U_BUCK
@@ -288,25 +289,24 @@ def section(d, s, sx, base, texts, tracks, vias):
     ]
     # --- output: shunt -> INA Kelvin -> FB string -> edge trunk -> rail pins / aux header
     TX = sx + 10.8                       # trunk x
-    rails = ["J%d" % (base + 2 + j) for j in range(3)]
-    outer = "1" if s == "L" else "2"
+    rails = ["J%d" % (base + 2 + j) for j in range(2)]
+    vpad = "2" if RAIL_ORDER == "G+" else "1"
+    YB = 45.8                            # output bus y (between the rail-pin rows)
     tracks += [
         # Kelvin sense through the filter
         dict(net=n("VPRE"), width=0.3, pts=[R(0) + ".1", [R(0) + ".1", 0, 1.1], R(15) + ".1"]),
         dict(net=n("SNP"), width=0.3, pts=[R(15) + ".2", C(8) + ".1", [sx + 8.91, 20.6], U_INA + ".8"]),
         dict(net=n("OUT"), width=0.3, pts=[R(0) + ".2", R(16) + ".1"]),
         dict(net=n("SNM"), width=0.25, pts=[R(16) + ".2", C(8) + ".2", [sx + 10.1, 20.3], [sx + 10.1, 22.275], U_INA + ".7"]),
-        dict(net=n("OUT"), width=0.8, pts=[R(0) + ".2", [TX, 16.44], [TX, 46.0 if s == "L" else 43.4]]),
+        dict(net=n("OUT"), width=0.8, pts=[R(0) + ".2", [TX, 16.44], [TX, YB]]),
         dict(net=n("OUT"), width=0.25, pts=[[TX, 24.9], [sx + 0.6, 24.9], R(1) + ".1"]),
-        dict(net=n("OUT"), width=0.8, pts=[[TX, 43.4], [rails[0] + "." + outer, 0, -1.6], rails[0] + "." + outer]),
-        dict(net=n("OUT"), width=0.4, pts=[[sx - 0.775, 43.4], C(6) + ".1"]),
-        dict(net=n("OUT"), width=0.8, layer="B.Cu", pts=[rails[0] + "." + outer, rails[1] + "." + outer, rails[2] + "." + outer]),
+        # bus -> + pins (upper row on top, lower row via the bottom layer) and the output cap
+        dict(net=n("OUT"), width=0.8, pts=[[TX, YB], [VX, YB]]),
+        dict(net=n("OUT"), width=0.8, pts=[rails[0] + "." + vpad, [VX, YB], C(6) + ".1"]),
+        dict(net=n("OUT"), width=0.8, layer="B.Cu", pts=[rails[0] + "." + vpad, rails[1] + "." + vpad]),
+        # bus -> AUX header
+        dict(net=n("OUT"), width=0.8, pts=[[TX, YB], [-3.81 if s == "L" else 3.81, YB], "J2.1" if s == "L" else "J2.4"]),
     ]
-    if s == "L":
-        tracks.append(dict(net=n("OUT"), width=0.8, pts=[[TX, 46.0], "J2.1"]))
-    else:
-        tracks.append(dict(net=n("OUT"), width=0.8, pts=[[rails[0] + "." + outer, 0, -1.6], [3.81, 43.4], "J2.4"]))
-        tracks[-2]["pts"] = tracks[-2]["pts"]  # noqa
     vias += [
         dict(net=n("EN"), x=sx + IX - 1.5, y=IY - 2.5),
         dict(net="GND", at=[C(0) + ".2", 0, 1.3]),
