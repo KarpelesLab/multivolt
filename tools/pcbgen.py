@@ -141,6 +141,18 @@ def resolve_pt(board, p):
     return (p[0], p[1])
 
 
+def add_line(board, ln):
+    pts = ln["pts"]
+    for a, b in zip(pts[:-1], pts[1:]):
+        sh = pcbnew.PCB_SHAPE(board)
+        sh.SetShape(pcbnew.SHAPE_T_SEGMENT)
+        sh.SetStart(pt(*a))
+        sh.SetEnd(pt(*b))
+        sh.SetLayer(layer_id(board, ln.get("layer", "F.SilkS")))
+        sh.SetWidth(mm(ln.get("width", 0.15)))
+        board.Add(sh)
+
+
 def add_track(board, nets, tr):
     pts = [resolve_pt(board, p) for p in tr["pts"]]
     lay = layer_id(board, tr.get("layer", "F.Cu"))
@@ -291,6 +303,8 @@ def build(bdir, route=True, passes=30, tries=8):
     add_outline(board, spec)
     for t in spec.get("texts", []):
         add_text(board, t)
+    for ln in spec.get("lines", []):
+        add_line(board, ln)
     for tr in spec.get("tracks", []):
         add_track(board, nets, tr)
     for v in spec.get("vias", []):

@@ -79,21 +79,36 @@ def build():
            "DIR is referenced to VA; 100k pull-up makes an open DIR pin = A->B.")
     d.power_flags = ["VA", "VB", "GND"]
     d.netclasses = {"Power": {"track": 0.4, "clearance": 0.2, "nets": ["VA", "VB", "GND"]}}
-    texts = []
+    # ---------------------------------------------------------------- silkscreen
+    Y0, Y1 = -4.9, ypin(10) + 2.4          # board extends 2 mm more at the top for the legend
+    texts, lines = [], []
     lab1 = {1: "VA", 10: "G"}
     lab2 = {1: "VB", 10: "G"}
     for k in range(1, 5):
         lab1[2 * k], lab1[2 * k + 1] = "A%d" % k, "D%d" % k
         lab2[2 * k], lab2[2 * k + 1] = "B%d" % k, "G"
     for i in range(1, 11):
-        texts.append(dict(text=lab1[i], x=-5.55, y=ypin(i), size=0.7, thick=0.13))
-        texts.append(dict(text=lab2[i], x=5.55, y=ypin(i), size=0.7, thick=0.13))
-    texts += [dict(text="LVL4  A→B", x=0, y=-1.95, size=0.8, thick=0.15),
-              dict(text="D=H/open: A→B", x=0, y=ypin(10) + 1.3, size=0.55, thick=0.1),
-              dict(text="MultiVolt LVL4 r1", x=0, y=ypin(5) + 1.3, size=0.6, layer="B.SilkS"),
-              dict(text="1.1-5.5V", x=0, y=ypin(6) + 0.2, size=0.6, layer="B.SilkS")]
-    stitch = [dict(net="GND", x=x, y=y) for x in (-5.0, 5.0) for y in (-2.0, ypin(10) + 1.6)]
-    d.board = dict(w=12.7, y0=-2.9, y1=ypin(10) + 2.4, corner=1.0, silk_refs=False, texts=texts, vias=stitch,
+        texts.append(dict(text=lab1[i], x=-5.5, y=ypin(i), size=0.8, thick=0.15))
+        texts.append(dict(text=lab2[i], x=5.5, y=ypin(i), size=0.8, thick=0.15))
+    # dividers: supply row | channel 1 | 2 | 3 | 4 | GND row, in both label strips
+    for k in range(5):
+        y = (2 * k + 0.5) * P
+        for x0, x1 in ((-6.2, -4.8), (4.8, 6.2)):
+            lines.append(dict(pts=[(x0, y), (x1, y)], width=0.12))
+    # top legend (direction rule), bottom title
+    texts += [dict(text="D open: A→B", x=0, y=-3.75, size=0.8, thick=0.15),
+              dict(text="D=GND: B→A", x=0, y=-2.45, size=0.8, thick=0.15),
+              dict(text="LVL4  1.1-5.5V", x=0, y=ypin(10) + 1.55, size=0.8, thick=0.15)]
+    # back side: full legend, rotated along the free strip between the header bodies
+    back = ["MultiVolt LVL4 level translator",
+            "VA, VB: 1.1-5.5V each, 420Mbps",
+            "DIRn open (or VA): An \u2192 Bn",
+            "DIRn to GND: Bn \u2192 An",
+            "push-pull only - not for I2C"]
+    for i, t in enumerate(back):
+        texts.append(dict(text=t, x=-1.76 + i * 0.88, y=(Y0 + Y1) / 2, size=0.68, thick=0.12, rot=90, layer="B.SilkS"))
+    stitch = [dict(net="GND", x=x, y=y) for x in (-5.4, 5.4) for y in (-1.3, ypin(10) + 1.55)]
+    d.board = dict(w=12.7, y0=Y0, y1=Y1, corner=1.0, silk_refs=False, texts=texts, lines=lines, vias=stitch,
                    zones=[dict(net="GND", layers=["B.Cu"], priority=0, clearance=0.2, spoke=0.3),
                           dict(net="GND", layers=["F.Cu"], priority=0, clearance=0.2, spoke=0.3, post=True)])
     return d

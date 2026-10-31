@@ -5,7 +5,7 @@ Two KiCad 10 boards, designed for JLCPCB assembly:
 | Board | What it is | Size | Parts cost* |
 |---|---|---|---|
 | **MultiVolt PSU** (`boards/mvpsu`) | USB-C PD supply that plugs into both breadboard power-rail pairs. Each side gets its own voltage, picked with a jumper: **1.2 / 1.5 / 1.8 / 2.5 / 3.3 / 5.0 V**. Latching overcurrent protection with LEDs. | 60 × 57 mm | ≈ $6.9 |
-| **MultiVolt LVL4** (`boards/lvl4`) | 4-channel fixed-direction level translator, DIP-20 footprint (straddles the centre channel). | 12.7 × 28 mm | ≈ $1.35 |
+| **MultiVolt LVL4** (`boards/lvl4`) | 4-channel fixed-direction level translator, DIP-20 footprint (straddles the centre channel). | 12.7 × 30 mm | ≈ $1.35 |
 
 \*Parts only, JLCPCB prices at qty 50/100, October 2026. Extended-part setup fees, PCB and assembly cost come on top.
 
