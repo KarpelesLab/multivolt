@@ -18259,7 +18259,7 @@
 		)
 	)
 	(gr_text "Rail pins: GND, + on both sides (left to right)"
-		(at 100 133 0)
+		(at 100 142.3 0)
 		(layer "B.SilkS")
 		(uuid "8adfca3d-452d-4679-b5c9-eb7d00ff280a")
 		(effects
@@ -18271,7 +18271,7 @@
 		)
 	)
 	(gr_text "github.com/KarpelesLab/multivolt"
-		(at 100 135.5 0)
+		(at 100 151.4 0)
 		(layer "B.SilkS")
 		(uuid "4e97b873-20ae-4b92-9585-9fe52602a960")
 		(effects
@@ -18283,7 +18283,7 @@
 		)
 	)
 	(gr_text "USB-C PD in (requests 9 V)"
-		(at 100 138 0)
+		(at 100 149.2 0)
 		(layer "B.SilkS")
 		(uuid "ff7178b4-4549-41c5-b808-de280a12043e")
 		(effects
@@ -18294,8 +18294,8 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "(c) 2026 Mark Karpeles - CERN-OHL-S v2"
-		(at 100 140.5 0)
+	(gr_text "(c) 2026 Karpeles Lab Inc - CERN-OHL-S v2"
+		(at 100 153.6 0)
 		(layer "B.SilkS")
 		(uuid "186d8b08-719c-40b6-8e83-eb42463d177b")
 		(effects
@@ -18307,7 +18307,7 @@
 		)
 	)
 	(gr_text "MultiVolt PSU r1.0 - 1.2..5V rails, 1A/2A latching OCP"
-		(at 100 130 0)
+		(at 100 140 0)
 		(layer "B.SilkS")
 		(uuid "1b2ed0fa-96e8-4ef6-b6f8-6d175e18fb90")
 		(effects

@@ -121,7 +121,7 @@ These boards haven't been built yet. On the first prototypes:
 4. Check how hot the converters get at 2 A.
 
 ## License
-Copyright 2026 Mark Karpeles.
+Copyright 2026 Karpeles Lab Inc.
 
 This hardware design, including the generator scripts that produce it, is licensed under the **CERN Open Hardware Licence Version 2 – Strongly Reciprocal** (CERN-OHL-S v2). See [`LICENSE`](LICENSE).
 
