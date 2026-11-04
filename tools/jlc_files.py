@@ -15,6 +15,7 @@ ROT_FIX = {
     "SOT-89-3": 180,
     "SOT-583-8": 270,
     "VSSOP-8_": 270,
+    "SOT-363_SC-70-6": 180,
 }
 # Footprints whose KiCad origin is not the part centre (pin 1 for headers, body outline for USB-C/SOT-89):
 # JLC places these on the centre of their pads.
