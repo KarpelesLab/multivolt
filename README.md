@@ -96,9 +96,9 @@ Upload these files from `boards/<name>/fab/`:
 
 Board settings: 2 layers, 1.6 mm, any finish.
 
-* **Check part rotations in JLC's placement preview before paying.** KiCad and LCSC sometimes disagree on which way a package faces. Fixes go in `ROT_FIX` in `tools/jlc_files.py`.
+* **Check part rotations in JLC's placement preview before paying.** KiCad and LCSC sometimes disagree on which way a package faces. Rotation fixes go in `ROT_FIX` in `tools/jlc_files.py`. Connectors whose KiCad origin isn't the part centre (pin headers, USB-C) are placed on their pad centre (`PAD_CENTER`).
 * The pin headers are through-hole parts. Use JLC's THT assembly option or solder them yourself. On both boards the breadboard headers mount on the **bottom** side.
-* Jumper shunts aren't in the BOM: 3 per PSU (2× VSEL, 2× ILIM if you want 1 A). Standard 2.54 mm shunts, e.g. LCSC C100114.
+* Jumper shunts aren't in the BOM: 2 to 4 per PSU (one per VSEL header, plus one per ILIM header if you want the 1 A trip). Standard 2.54 mm shunts, e.g. LCSC C100114.
 * Rules used: 0.15 mm clearance, 0.10 mm minimum trace (only at fine-pitch pads), 0.3 mm vias. All within JLC's standard 2-layer process.
 
 ## Regenerating
