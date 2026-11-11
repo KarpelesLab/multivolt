@@ -48,10 +48,10 @@ boards/<name>/ generated KiCad 10 project (.kicad_sch/.kicad_pcb/.kicad_pro)
 * A 1 kΩ bleeder on each rail drops the old voltage in about 35 ms after you switch to a lower setting. The buck can't pull its output down by itself.
 
 ### Breadboard rail pins
-Sized for MB102-style 830-point breadboards, 55–56 mm wide, with everything on the 0.1″ grid.
+Sized for MB102-style 830-point breadboards, 55–56 mm wide.
 
-* **Positions:** the inner rail holes are 0.85″ (21.59 mm) from the centreline and the outer ones 0.95″ (24.13 mm).
-* **Pins:** each side has **two 2-pin headers, 5 holes (12.7 mm) apart** along the rail, so the board sits firmly.
+* **Positions:** the inner rail holes are 0.825″ (20.955 mm) from the centreline and the outer ones 0.925″ (23.495 mm). The rail pairs are half a pitch off the 0.1″ grid of the main area.
+* **Pins:** each side has **two 2-pin headers in holes 1 and 5 of a rail group (10.16 mm apart)**, so the board sits firmly. Rail holes come in groups of five with a blank position between groups.
 * **Polarity:** the order is **GND, +** on both sides, reading left to right with the USB connector facing away from the breadboard. To flip it to + then GND, set `RAIL_ORDER = "+G"` in `designs/psu.py` and regenerate.
 * **Mounting:** the headers go on the **bottom** side, pins pointing down.
 

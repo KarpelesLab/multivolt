@@ -36,19 +36,22 @@ TAPS = ["1.2V", "1.5V", "1.8V", "2.5V", "3.3V", "5.0V"]
 BOARD_W = 60.0
 BOARD_H = 57.0
 SEC_X = 17.0             # section centres at -/+ SEC_X
-# Breadboard power rails (MB102-style 830, 55-56 mm wide, everything on the 0.1" grid):
-# inner rail hole 0.85" from the centreline, outer rail 0.95".
-RAIL_INNER = 21.59
-RAIL_OUTER = 24.13
-RAIL_ROW_Y = (42.8, 55.5)       # two 2-pin headers per side, 5 holes (12.7 mm) apart along the rail
+# Breadboard power rails (MB102-style 830, 55-56 mm wide).  Measured on the r1.0 boards: the two
+# rail pairs are 1.27 mm (half a pitch) closer together than r1.0 assumed, so each side sits
+# 0.635 mm further in: inner rail hole 0.825" from the centreline, outer rail 0.925".
+RAIL_INNER = 20.955
+RAIL_OUTER = 23.495
+# two 2-pin headers per side in holes 1 and 5 of a rail group (4 pitches = 10.16 mm apart).
+# Rail holes come in groups of 5 with a blank position between groups: hole "6" does not exist.
+RAIL_ROW_Y = (42.8, 52.96)
 RAIL_ORDER = "G+"               # left-to-right on BOTH sides: "G+" = GND then +, "+G" = + then GND
 
 
 def build():
-    d = Design("mvpsu", "MultiVolt PSU - USB-C PD breadboard supply", rev="1.0",
+    d = Design("mvpsu", "MultiVolt PSU - USB-C PD breadboard supply", rev="1.1",
                comments=["USB-C PD (CH224A, 9 V request) -> 2x TPS62933P, jumper-selected 1.2/1.5/1.8/2.5/3.3/5.0 V",
                          "INA301 latching overcurrent per rail (1 A, or 2 A with ILIM jumper removed)",
-                         "Rail pins: 2x2 pins per side, 5 holes apart; GND, + on both sides"])
+                         "Rail pins: 2x2 pins per side, in rail holes 1 and 5; GND, + on both sides"])
     texts, tracks, vias, zones = [], [], [], []
 
     # ================================================================ input
@@ -104,19 +107,19 @@ def build():
     d.add("J2", "Connector_Generic:Conn_01x04", "AUX OUT", HDR + "PinHeader_1x04_P2.54mm_Vertical",
           pins={"1": "OUT_L", "2": "GND", "3": "GND", "4": "OUT_R"}, lcsc="C2691448", group="Outputs",
           desc="rail outputs for wiring off-board (pins up)", pcb=dict(x=-3.81, y=46.0, rot=90))
-    d.note("Outputs", "Rail pins: two 2-pin headers per side, 5 holes apart along the rail, for MB102-style\n"
-                      "breadboards (inner rail 0.85\" / outer rail 0.95\" from centre). Order GND, + on both sides.")
+    d.note("Outputs", "Rail pins: two 2-pin headers per side, in holes 1 and 5 of a rail group (10.16 mm apart),\n"
+                      "for MB102-style breadboards (inner rail 0.825\" / outer rail 0.925\" from centre). Order GND, + on both sides.")
 
     # ----------------------------------------------------------- board graphics
     texts += [
         dict(text="MultiVolt PSU", x=0, y=54.6, size=1.3, thick=0.22),
-        dict(text="r1.0", x=0, y=56.1, size=0.8),
+        dict(text="r1.1", x=0, y=56.1, size=0.8),
         dict(text="USB-C PD in (requests 9 V)", x=0, y=49.2, size=0.9, layer="B.SilkS"),
         dict(text="RESET", x=0, y=30.0, size=0.8),
         dict(text="PD", x=-5.6, y=39.0, size=0.8),
         dict(text="L    AUX    R", x=0, y=44.0, size=0.8),
         dict(text="+  G  G  +", x=0, y=48.1, size=0.8),
-        dict(text="MultiVolt PSU r1.0 - 1.2..5V rails, 1A/2A latching OCP", x=0, y=40.0, size=1.0, layer="B.SilkS"),
+        dict(text="MultiVolt PSU r1.1 - 1.2..5V rails, 1A/2A latching OCP", x=0, y=40.0, size=1.0, layer="B.SilkS"),
         dict(text="Rail pins: GND, + on both sides (left to right)", x=0, y=42.3, size=0.9, layer="B.SilkS"),
         dict(text="github.com/KarpelesLab/multivolt", x=0, y=51.4, size=0.9, layer="B.SilkS"),
         dict(text="(c) 2026 Karpeles Lab Inc - CERN-OHL-S v2", x=0, y=53.6, size=0.9, layer="B.SilkS"),
@@ -260,7 +263,7 @@ def section(d, s, sx, base, texts, tracks, vias):
     texts.append(dict(text="1A", x=sx + 9.4, y=25.4, size=0.8))
     texts.append(dict(text="I", x=sx + 5.8, y=30.2, size=0.7))
     texts.append(dict(text="RAIL " + s, x=sx, y=1.6, size=1.1, thick=0.2))
-    # --- rail headers: two 2-pin headers per side, 5 holes apart along the rail (bottom side, pins down)
+    # --- rail headers: two 2-pin headers per side, rail holes 1 and 5 (bottom side, pins down)
     for j, y in enumerate(RAIL_ROW_Y):
         ref = "J%d" % (base + 2 + j)
         # rotated 270 on the bottom side: pad 1 at the lower x, pad 2 at +2.54 mm
