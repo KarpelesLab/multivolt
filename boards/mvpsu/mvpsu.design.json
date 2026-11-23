@@ -1,7 +1,7 @@
 {
  "name": "mvpsu",
  "title": "MultiVolt PSU - USB-C PD breadboard supply",
- "rev": "1.1",
+ "rev": "1.2",
  "root_uuid": "ea6131f5-f176-56da-bcec-843a8f76abc4",
  "parts": [
   {
@@ -604,7 +604,11 @@
    "pcb": {
     "x": -10.2,
     "y": 22.6,
-    "rot": 0
+    "rot": 0,
+    "pad_size": [
+     1.625,
+     0.4
+    ]
    },
    "dnp": false,
    "in_bom": true,
@@ -1404,7 +1408,11 @@
    "pcb": {
     "x": 23.8,
     "y": 22.6,
-    "rot": 0
+    "rot": 0,
+    "pad_size": [
+     1.625,
+     0.4
+    ]
    },
    "dnp": false,
    "in_bom": true,

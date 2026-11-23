@@ -1,7 +1,7 @@
 (kicad_sch (version 20231120) (generator "eeschema") (generator_version "8.0")
 (uuid "ea6131f5-f176-56da-bcec-843a8f76abc4")
 (paper "A1")
-(title_block (title "MultiVolt PSU - USB-C PD breadboard supply") (date "2026-11-12") (rev "1.1") (company "") (comment 1 "USB-C PD (CH224A, 9 V request) -> 2x TPS62933P, jumper-selected 1.2/1.5/1.8/2.5/3.3/5.0 V") (comment 2 "INA301 latching overcurrent per rail (1 A, or 2 A with ILIM jumper removed)") (comment 3 "Rail pins: 2x2 pins per side, in rail holes 1 and 5; GND, + on both sides"))
+(title_block (title "MultiVolt PSU - USB-C PD breadboard supply") (date "2026-11-23") (rev "1.2") (company "") (comment 1 "USB-C PD (CH224A, 9 V request) -> 2x TPS62933P, jumper-selected 1.2/1.5/1.8/2.5/3.3/5.0 V") (comment 2 "INA301 latching overcurrent per rail (1 A, or 2 A with ILIM jumper removed)") (comment 3 "Rail pins: 2x2 pins per side, in rail holes 1 and 5; GND, + on both sides"))
 (lib_symbols
 (symbol "Connector:TestPoint"
     (pin_numbers

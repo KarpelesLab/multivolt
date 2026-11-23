@@ -7,6 +7,8 @@ import sexp
 from sexp import Sym, find, find_all
 
 KICAD_SYM_DIR = "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols"
+if not os.path.isdir(KICAD_SYM_DIR):  # Linux
+    KICAD_SYM_DIR = "/usr/share/kicad/symbols"
 EXTRA_LIBS = {}  # libname -> path (project libraries)
 
 _cache = {}

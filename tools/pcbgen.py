@@ -12,6 +12,8 @@ import sys
 import pcbnew
 
 FPDIR = "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints"
+if not os.path.isdir(FPDIR):  # Linux
+    FPDIR = "/usr/share/kicad/footprints"
 HERE = os.path.dirname(os.path.abspath(__file__))
 JAVA = os.path.join(HERE, "bin", "java")
 FREEROUTING = os.path.join(HERE, "bin", "freerouting.jar")

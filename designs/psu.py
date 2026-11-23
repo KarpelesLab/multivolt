@@ -48,7 +48,7 @@ RAIL_ORDER = "G+"               # left-to-right on BOTH sides: "G+" = GND then +
 
 
 def build():
-    d = Design("mvpsu", "MultiVolt PSU - USB-C PD breadboard supply", rev="1.1",
+    d = Design("mvpsu", "MultiVolt PSU - USB-C PD breadboard supply", rev="1.2",
                comments=["USB-C PD (CH224A, 9 V request) -> 2x TPS62933P, jumper-selected 1.2/1.5/1.8/2.5/3.3/5.0 V",
                          "INA301 latching overcurrent per rail (1 A, or 2 A with ILIM jumper removed)",
                          "Rail pins: 2x2 pins per side, in rail holes 1 and 5; GND, + on both sides"])
@@ -113,13 +113,13 @@ def build():
     # ----------------------------------------------------------- board graphics
     texts += [
         dict(text="MultiVolt PSU", x=0, y=54.6, size=1.3, thick=0.22),
-        dict(text="r1.1", x=0, y=56.1, size=0.8),
+        dict(text="r1.2", x=0, y=56.1, size=0.8),
         dict(text="USB-C PD in (requests 9 V)", x=0, y=49.2, size=0.9, layer="B.SilkS"),
         dict(text="RESET", x=0, y=30.0, size=0.8),
         dict(text="PD", x=-5.6, y=39.0, size=0.8),
         dict(text="L    AUX    R", x=0, y=44.0, size=0.8),
         dict(text="+  G  G  +", x=0, y=48.1, size=0.8),
-        dict(text="MultiVolt PSU r1.1 - 1.2..5V rails, 1A/2A latching OCP", x=0, y=40.0, size=1.0, layer="B.SilkS"),
+        dict(text="MultiVolt PSU r1.2 - 1.2..5V rails, 1A/2A latching OCP", x=0, y=40.0, size=1.0, layer="B.SilkS"),
         dict(text="Rail pins: GND, + on both sides (left to right)", x=0, y=42.3, size=0.9, layer="B.SilkS"),
         dict(text="github.com/KarpelesLab/multivolt", x=0, y=51.4, size=0.9, layer="B.SilkS"),
         dict(text="(c) 2026 Karpeles Lab Inc - CERN-OHL-S v2", x=0, y=53.6, size=0.9, layer="B.SilkS"),

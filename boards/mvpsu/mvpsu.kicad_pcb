@@ -18016,7 +18016,7 @@
 			)
 		)
 	)
-	(gr_text "r1.1"
+	(gr_text "r1.2"
 		(at 100 156.1 0)
 		(layer "F.SilkS")
 		(uuid "7e2d4f58-3d80-4352-9ce3-ba3516d8eb6d")
@@ -18306,7 +18306,7 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "MultiVolt PSU r1.1 - 1.2..5V rails, 1A/2A latching OCP"
+	(gr_text "MultiVolt PSU r1.2 - 1.2..5V rails, 1A/2A latching OCP"
 		(at 100 140 0)
 		(layer "B.SilkS")
 		(uuid "99a7f5a0-d362-4624-aa1c-bd054f48d6f9")
