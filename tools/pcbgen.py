@@ -281,6 +281,12 @@ def build(bdir, route=True, passes=30, tries=8):
             fp.SetDNP(True)
         if not p.get("in_bom", True):
             fp.SetAttributes(fp.GetAttributes() | pcbnew.FP_EXCLUDE_FROM_BOM)
+        # pad_size: [w, h] in footprint coordinates, applied to every SMD pad (e.g. narrower
+        # fine-pitch pads so the fab keeps a solder mask dam between them)
+        if "pad_size" in pc:
+            for pad in fp.Pads():
+                if pad.GetAttribute() == pcbnew.PAD_ATTRIB_SMD:
+                    pad.SetSize(pcbnew.VECTOR2I(mm(pc["pad_size"][0]), mm(pc["pad_size"][1])))
         padmap = pc.get("padmap", {})
         for pad in fp.Pads():
             num = pad.GetNumber()

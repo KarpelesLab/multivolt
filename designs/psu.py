@@ -210,7 +210,8 @@ def section(d, s, sx, base, texts, tracks, vias):
           pins={"1": "+3V3", "2": n("ISNS"), "3": n("LIM"), "4": "GND", "5": "RST", "6": n("EN"),
                 "7": n("SNM"), "8": n("SNP")},
           lcsc="C471062", mpn="INA301A1IDGKR", group=g, desc="gain 20: 1 V/A on the 50 mOhm shunt",
-          pcb=P(6.8, 22.6))
+          # pads 0.40 wide (KiCad's 0.50 leaves a 0.15 mm mask web at 0.65 mm pitch; PCBWay flags it)
+          pcb=P(6.8, 22.6, pad_size=[1.625, 0.40]))
     # input filter (INA301 datasheet): 2 x 10R + 4.7uF -> ~94 us, so cap inrush doesn't latch a trip
     d.add(R(15), "Device:R", "10", R0402, pins={"1": n("VPRE"), "2": n("SNP")}, lcsc="C25077", group=g,
           pcb=P(8.3, 17.8, 270))
